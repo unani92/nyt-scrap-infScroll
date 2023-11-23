@@ -1,14 +1,17 @@
 import clsx from 'clsx';
 import HomePage from 'pages/HomePage';
 import { Routes, Route } from 'react-router-dom';
+import ReactQueryProvider from 'store/reactQueryStore';
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </Layout>
+    <ReactQueryProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Layout>
+    </ReactQueryProvider>
   );
 }
 
