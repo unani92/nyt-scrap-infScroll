@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import { justifyBetween } from 'lib/styles';
+import HomeHeader from 'components/HomeHeader';
 
 const HomePage = () => {
   return (
     <div className={clsx(justifyBetween)}>
-      <div className="text-red-500 text-lg">hello world</div>
-      <span>kkkkk</span>
+      <HomeHeader />
     </div>
   );
 };
