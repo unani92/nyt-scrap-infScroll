@@ -1,3 +1,17 @@
+export type ArticleResponse = {
+  docs: Doc[];
+  meta: Meta;
+};
+
+export type ArticleRequestParams = {
+  page: number;
+  sort: 'newest';
+  'api-key': string;
+  end_date: string;
+  fl: string;
+  fq?: string;
+};
+
 export type Doc = {
   abstract: string;
   web_url: string;
