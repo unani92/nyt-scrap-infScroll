@@ -1,4 +1,4 @@
-type Doc = {
+export type Doc = {
   abstract: string;
   web_url: string;
   source: string;
@@ -7,12 +7,12 @@ type Doc = {
   by_line: ByLine;
 };
 
-type ByLine = {
+export type ByLine = {
   original: string;
   person: Person;
 };
 
-type Person = {
+export type Person = {
   firstname: string;
   middlename: string;
   lastname: string;
@@ -23,7 +23,7 @@ type Person = {
   rank: number;
 };
 
-type Headline = {
+export type Headline = {
   main: string;
   kicker: null;
   content_kicker: null;
@@ -33,13 +33,13 @@ type Headline = {
   sub: null;
 };
 
-type Meta = {
+export type Meta = {
   hits: number;
   offset: number;
   time: number;
 };
 
-type ArticleSearchResponse = {
+export type ArticleSearchResponse = {
   docs: Doc[];
   meta: Meta;
 };
