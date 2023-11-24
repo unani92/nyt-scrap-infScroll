@@ -15,4 +15,4 @@ export interface HttpClient extends AxiosInstance {
 
 export default http;
 
-http.interceptors.response.use(res => res.data);
+http.interceptors.response.use(res => res.data.response);

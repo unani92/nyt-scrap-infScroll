@@ -66,7 +66,7 @@ export enum Glocation {
   USA = 'UNITED STATES OF AMERICA',
   RUSSIA = 'RUSSIA',
   FRANCE = 'FRANCE',
-  UK = '"ENGLAND", "SCOTLAND", "WALES", "NORTHERN IRELAND"',
+  UK = 'ENGLAND", "SCOTLAND", "WALES", "NORTHERN IRELAND',
 }
 
 export type ValueLabel<T> = {
