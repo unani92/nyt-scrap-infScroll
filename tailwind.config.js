@@ -10,6 +10,7 @@ module.exports = {
         lg: '18px',
       },
       borderRadius: {
+        md: '16px',
         lg: '30px',
       },
       lineHeight: {

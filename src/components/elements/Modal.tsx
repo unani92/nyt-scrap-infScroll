@@ -20,7 +20,7 @@ export const Modal = ({
       <Dialog
         initialFocus={focusRef}
         onClose={onClose}
-        className="z-10 fixed inset-0 overflow-y-auto rounded-lg w-full max-w-[560px] m-auto"
+        className="z-10 fixed inset-0 overflow-y-auto w-full max-w-[560px] m-auto"
       >
         <div className="min-h-screen flex justify-center items-center">
           <Transition.Child
@@ -46,7 +46,7 @@ export const Modal = ({
             <div
               className={clsx(
                 className,
-                'overflow-visible w-full max-w-[90%] text-left transition-all transform bg-white rounded-lg p-5'
+                'overflow-visible w-full max-w-[90%] max-h-[70vh] text-left transition-all transform bg-white rounded-md p-5'
               )}
             >
               {children}
