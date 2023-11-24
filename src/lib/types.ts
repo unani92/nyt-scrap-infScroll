@@ -57,3 +57,19 @@ export type ArticleSearchResponse = {
   docs: Doc[];
   meta: Meta;
 };
+
+export enum Glocation {
+  SOUTH_KOREA = 'SOUTH KOREA',
+  NORTH_KOREA = 'NORTH KOREA',
+  CHINA = 'CHINA',
+  JAPAN = 'JAPAN',
+  USA = 'UNITED STATES OF AMERICA',
+  RUSSIA = 'RUSSIA',
+  FRANCE = 'FRANCE',
+  UK = '"ENGLAND", "SCOTLAND", "WALES", "NORTHERN IRELAND"',
+}
+
+export type ValueLabel<T> = {
+  value: T;
+  label: string;
+};
