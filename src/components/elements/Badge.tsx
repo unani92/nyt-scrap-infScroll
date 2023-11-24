@@ -17,13 +17,14 @@ const Badge = ({
   return (
     <div
       onClick={() => onClick && onClick()}
-      className={clsx('max-w-[130px] border border-gray-350 rounded-lg px-3 py-1')}
+      className={clsx('max-w-[130px] border rounded-lg px-3 py-1', selected ? 'border-blue-500' : 'border-gray-350')}
     >
       <div className={clsx(justifyCenter, 'gap-x-1')}>
         {icon}
         <span
           className={clsx(
-            'text-black-80 leading-24 tracking-tighter text-md',
+            'leading-24 tracking-tighter text-md',
+            selected ? 'text-blue-500' : 'text-black-80',
             icon ? 'max-w-[80%] ' : 'max-w-full',
             lineClamp1
           )}
