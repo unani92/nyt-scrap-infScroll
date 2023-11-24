@@ -31,10 +31,7 @@ const HomeHeader = () => {
 
 function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { setFilter, headline: headlineDefault, pubDate: pubDateDefault, glocation: glocationDefault } = useStore();
-  // const _onChange = debounce(e => {
-  //   const val = e.target.value as string;
-  //   onChange(val);
-  // }, 500);
+
   const [headline, setHeadline] = useState(headlineDefault);
   const onChangeHeadline = useCallback(
     debounce((e: React.ChangeEvent<HTMLInputElement>) => {
