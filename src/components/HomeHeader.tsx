@@ -2,20 +2,20 @@ import { clsx } from 'clsx';
 import Badge from './elements/Badge';
 import { flexCenter } from 'lib/styles';
 import { Search, CalendarCheck } from 'lucide-react';
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { Modal } from './elements/Modal';
 import InputDefault, { InputCalendar } from './elements/Input';
 import { Value } from 'react-calendar/dist/cjs/shared/types';
 import SelectButtons from './elements/SelectButtons';
 import { GLOCATION_ITEMS } from 'lib/constants';
-import { Glocation } from 'lib/types';
+import { Glocation, ValueLabel } from 'lib/types';
 import BottomButton from './elements/BottomButton';
 import useStore from 'store/zustand';
 import { format, parseISO } from 'date-fns';
 import { debounce } from 'ts-debounce';
 
 const HomeHeader = () => {
-  const { headline, pubDate, glocation } = useStore();
+  const { headline, pubDate, glocations, getGlocationsParsed } = useStore();
   const [open, setOpen] = useState(false);
   const onClick = useCallback((open: boolean) => setOpen(open), []);
   return (
@@ -33,7 +33,11 @@ const HomeHeader = () => {
           selected={Boolean(pubDate)}
           icon={<CalendarCheck size={16} color={pubDate ? '#3478F6' : '#6D6D6D'} />}
         />
-        <Badge onClick={() => onClick(true)} label={glocation || '전체 국가'} selected={Boolean(glocation)} />
+        <Badge
+          onClick={() => onClick(true)}
+          label={glocations ? getGlocationsParsed() : '전체 국가'}
+          selected={Boolean(glocations)}
+        />
       </div>
       <FiltersModal open={open} onClose={() => onClick(false)} />
     </>
@@ -41,7 +45,7 @@ const HomeHeader = () => {
 };
 
 function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { setFilter, headline: headlineDefault, pubDate: pubDateDefault, glocation: glocationDefault } = useStore();
+  const { setFilter, headline: headlineDefault, pubDate: pubDateDefault, glocations: glocationDefault } = useStore();
 
   const [headline, setHeadline] = useState(headlineDefault);
   const onChangeHeadline = useCallback(
@@ -55,14 +59,21 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
   const [pubDate, setDate] = useState<Value | undefined>(pubDateDefault ? parseISO(pubDateDefault) : undefined);
   const onChangeDate = useCallback((date: Value) => date && setDate(date), []);
 
-  const [glocation, setGlocation] = useState<Glocation | undefined>(glocationDefault);
-  const onChangeGlocation = useCallback((value: Glocation) => {
-    setGlocation(value);
-  }, []);
+  const [glocations, setGlocations] = useState<Glocation[]>(glocationDefault);
+  const onChangeGlocation = useCallback(
+    (value: Glocation) => {
+      setGlocations(
+        glocations.some(gItems => gItems === value)
+          ? glocations.filter(gItem => gItem !== value)
+          : [...glocations, value]
+      );
+    },
+    [glocations]
+  );
 
   const onClickBottomButton = useCallback(
-    ({ headline, pubDate, glocation }: { headline?: string; pubDate?: Date; glocation?: Glocation }) => {
-      setFilter({ headline, pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined, glocation });
+    ({ headline, pubDate, glocations }: { headline?: string; pubDate?: Date; glocations: Glocation[] }) => {
+      setFilter({ headline, pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined, glocations });
       onClose();
     },
     []
@@ -80,10 +91,10 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
         <InputCalendar date={pubDate} onChangeDate={onChangeDate} />
       </FilterContainer>
       <FilterContainer label="국가">
-        <SelectButtons value={glocation} options={GLOCATION_ITEMS} onClick={onChangeGlocation} />
+        <SelectButtons value={glocations} options={GLOCATION_ITEMS} onClick={onChangeGlocation} />
       </FilterContainer>
       <BottomButton
-        onClick={() => onClickBottomButton({ headline, pubDate: pubDate as Date, glocation })}
+        onClick={() => onClickBottomButton({ headline, pubDate: pubDate as Date, glocations })}
         label="필터 적용하기"
       />
     </Modal>

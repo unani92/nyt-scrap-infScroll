@@ -13,17 +13,18 @@ const SelectButtons = <T,>({
   options,
   onClick,
 }: {
-  value?: T;
+  value?: T | T[];
   options: ValueLabel<T>[];
   onClick: (value: T) => void;
 }) => {
+  const isArray = Array.isArray(value);
   return (
     <div className={clsx(flexCenter, 'flex-wrap gap-2')}>
       {options.map(option => (
         <RoundedButton
           onClick={() => onClick(option.value)}
           label={option.label}
-          selected={value === option.value}
+          selected={isArray ? value.includes(option.value) : value === option.value}
           key={String(option.value)}
         />
       ))}
