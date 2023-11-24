@@ -25,7 +25,15 @@ const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], Filter
     return glocations.length > 0
       ? glocations.length === 1
         ? GLOCATION_ITEMS.find(item => item.value === glocations[0])!.label
-        : GLOCATION_ITEMS.find(item => item.value === glocations[0])!.label + ` 외 ${glocations.length - 1}개`
+        : GLOCATION_ITEMS.find(
+            item =>
+              item.value ===
+              glocations.sort(
+                (a, b) =>
+                  GLOCATION_ITEMS.findIndex(item => item.value === a) -
+                  GLOCATION_ITEMS.findIndex(item => item.value === b)
+              )[0]
+          )!.label + ` 외 ${glocations.length - 1}개`
       : '';
   },
   setFilter: ({ headline, pubDate, glocations }: FilterState) => set(() => ({ headline, pubDate, glocations })),
