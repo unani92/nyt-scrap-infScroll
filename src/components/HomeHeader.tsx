@@ -10,7 +10,7 @@ import SelectButtons from './elements/SelectButtons';
 import { GLOCATION_ITEMS } from 'lib/constants';
 import { Glocation } from 'lib/types';
 import BottomButton from './elements/BottomButton';
-import useStore from 'store/zustlandStore';
+import useStore from 'store/zustand';
 import { format, parseISO } from 'date-fns';
 import { debounce } from 'ts-debounce';
 
