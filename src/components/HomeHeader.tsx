@@ -10,6 +10,8 @@ import SelectButtons from './elements/SelectButtons';
 import { GLOCATION_ITEMS } from 'lib/constants';
 import { Glocation } from 'lib/types';
 import BottomButton from './elements/BottomButton';
+import useStore, { FilterState } from 'store/zustlandStore';
+import { format } from 'date-fns';
 
 const HomeHeader = () => {
   const [open, setOpen] = useState(false);
@@ -27,14 +29,22 @@ const HomeHeader = () => {
 };
 
 function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { setFilter } = useStore();
   const [headline, setHeadline] = useState('');
   const onChangeHeadline = useCallback((value: string) => setHeadline(value), []);
-  const [date, setDate] = useState<Value>();
+  const [pubDate, setDate] = useState<Value>();
   const onChangeDate = useCallback((date: Value) => date && setDate(date), []);
   const [glocation, setGlocation] = useState<Glocation>();
   const onChangeGlocation = useCallback((value: Glocation) => {
     setGlocation(value);
   }, []);
+  const onClickBottomButton = useCallback(
+    ({ headline, pubDate, glocation }: { headline?: string; pubDate?: Date; glocation?: Glocation }) => {
+      setFilter({ headline, pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined, glocation });
+      onClose();
+    },
+    []
+  );
   return (
     <Modal className="min-h-[500px]" isOpen={open} onClose={onClose}>
       <FilterContainer label="헤드라인">
@@ -44,12 +54,15 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
         />
       </FilterContainer>
       <FilterContainer label="날짜">
-        <InputCalendar date={date} onChangeDate={onChangeDate} />
+        <InputCalendar date={pubDate} onChangeDate={onChangeDate} />
       </FilterContainer>
       <FilterContainer label="국가">
         <SelectButtons value={glocation} options={GLOCATION_ITEMS} onClick={onChangeGlocation} />
       </FilterContainer>
-      <BottomButton label="필터 적용하기" />
+      <BottomButton
+        onClick={() => onClickBottomButton({ headline, pubDate: pubDate as Date, glocation })}
+        label="필터 적용하기"
+      />
     </Modal>
   );
 }
