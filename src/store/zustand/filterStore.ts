@@ -2,16 +2,18 @@ import { Glocation } from 'lib/types';
 import { DefaultStore } from 'store/zustand/exampleStore';
 import { StateCreator } from 'zustand';
 import { GLOCATION_ITEMS } from 'lib/constants';
+import { format, parseISO } from 'date-fns';
 
 // filterStore
 interface FilterState {
   headline?: string;
-  pubDate?: string;
+  pubDate?: string; // yyyy-MM-dd
   glocations: Glocation[];
 }
 export interface FilterStore extends FilterState {
   setFilter: (value: FilterState) => void;
   getGlocationsParsed: () => string;
+  getPubDateDot: () => string;
 }
 const filterState: FilterState = {
   headline: undefined,
@@ -20,6 +22,7 @@ const filterState: FilterState = {
 };
 const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], FilterStore> = (set, get) => ({
   ...filterState,
+  getPubDateDot: () => (get().pubDate ? format(parseISO(get().pubDate!), 'yyyy.M.d') : ''),
   getGlocationsParsed: () => {
     const glocations = get().glocations;
     return glocations.length > 0

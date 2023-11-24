@@ -15,7 +15,7 @@ import { format, parseISO } from 'date-fns';
 import { debounce } from 'ts-debounce';
 
 const HomeHeader = () => {
-  const { headline, pubDate, glocations, getGlocationsParsed } = useStore();
+  const { headline, pubDate, glocations, getGlocationsParsed, getPubDateDot } = useStore();
   const [open, setOpen] = useState(false);
   const onClick = useCallback((open: boolean) => setOpen(open), []);
   return (
@@ -29,14 +29,14 @@ const HomeHeader = () => {
         />
         <Badge
           onClick={() => onClick(true)}
-          label={pubDate || '전체 날짜'}
+          label={getPubDateDot() || '전체 날짜'}
           selected={Boolean(pubDate)}
           icon={<CalendarCheck size={16} color={pubDate ? '#3478F6' : '#6D6D6D'} />}
         />
         <Badge
           onClick={() => onClick(true)}
-          label={glocations ? getGlocationsParsed() : '전체 국가'}
-          selected={Boolean(glocations)}
+          label={glocations.length > 0 ? getGlocationsParsed() : '전체 국가'}
+          selected={glocations.length > 0}
         />
       </div>
       <FiltersModal open={open} onClose={() => onClick(false)} />
