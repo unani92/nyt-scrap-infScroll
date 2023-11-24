@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import Badge from './elements/Badge';
 import { flexCenter } from 'lib/styles';
 import { Search, CalendarCheck } from 'lucide-react';
-import { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import { Modal } from './elements/Modal';
 import InputDefault, { InputCalendar } from './elements/Input';
 import { Value } from 'react-calendar/dist/cjs/shared/types';
@@ -11,7 +11,8 @@ import { GLOCATION_ITEMS } from 'lib/constants';
 import { Glocation } from 'lib/types';
 import BottomButton from './elements/BottomButton';
 import useStore, { FilterState } from 'store/zustlandStore';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+import { debounce } from 'ts-debounce';
 
 const HomeHeader = () => {
   const [open, setOpen] = useState(false);
@@ -29,15 +30,28 @@ const HomeHeader = () => {
 };
 
 function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { setFilter } = useStore();
-  const [headline, setHeadline] = useState('');
-  const onChangeHeadline = useCallback((value: string) => setHeadline(value), []);
-  const [pubDate, setDate] = useState<Value>();
+  const { setFilter, headline: headlineDefault, pubDate: pubDateDefault, glocation: glocationDefault } = useStore();
+  // const _onChange = debounce(e => {
+  //   const val = e.target.value as string;
+  //   onChange(val);
+  // }, 500);
+  const [headline, setHeadline] = useState(headlineDefault);
+  const onChangeHeadline = useCallback(
+    debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+      const val = e.target.value as string;
+      setHeadline(val);
+    }, 500),
+    []
+  );
+
+  const [pubDate, setDate] = useState<Value | undefined>(pubDateDefault ? parseISO(pubDateDefault) : undefined);
   const onChangeDate = useCallback((date: Value) => date && setDate(date), []);
-  const [glocation, setGlocation] = useState<Glocation>();
+
+  const [glocation, setGlocation] = useState<Glocation | undefined>(glocationDefault);
   const onChangeGlocation = useCallback((value: Glocation) => {
     setGlocation(value);
   }, []);
+
   const onClickBottomButton = useCallback(
     ({ headline, pubDate, glocation }: { headline?: string; pubDate?: Date; glocation?: Glocation }) => {
       setFilter({ headline, pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined, glocation });
@@ -49,7 +63,8 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
     <Modal className="min-h-[500px]" isOpen={open} onClose={onClose}>
       <FilterContainer label="헤드라인">
         <InputDefault
-          onChange={val => onChangeHeadline(val as string)}
+          defaultValue={headlineDefault}
+          onChange={onChangeHeadline}
           placeholder="검색하실 헤드라인을 입력해주세요."
         />
       </FilterContainer>

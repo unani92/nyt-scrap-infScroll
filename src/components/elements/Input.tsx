@@ -3,24 +3,17 @@ import { debounce } from 'ts-debounce';
 import { CalendarCheck } from 'lucide-react';
 import { justifyBetween } from 'lib/styles';
 import { format } from 'date-fns';
-import { useCallback, useRef, useState } from 'react';
+import { HTMLAttributes, useCallback, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
 import { Value } from 'react-calendar/dist/cjs/shared/types';
 
 const inputContainerStyle = 'w-full border rounded-sm px-5 h-10 text-md text-md leading-24 tight-m56';
+interface RoundedButtonProps extends HTMLAttributes<HTMLInputElement> {
+  className?: string;
+}
 
-const InputDefault = ({
-  onChange,
-  placeholder,
-}: {
-  onChange: (value: string | number) => void;
-  placeholder?: string;
-}) => {
-  const _onChange = debounce(e => {
-    const val = e.target.value as string;
-    onChange(val);
-  }, 500);
-  return <input className={clsx(inputContainerStyle)} placeholder={placeholder} onChange={e => _onChange(e)} />;
+const InputDefault = ({ className, ...props }: RoundedButtonProps) => {
+  return <input {...props} className={clsx(inputContainerStyle)} />;
 };
 
 export const InputCalendar = ({
