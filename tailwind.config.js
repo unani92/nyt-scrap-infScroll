@@ -10,6 +10,7 @@ module.exports = {
         lg: '18px',
       },
       borderRadius: {
+        sm: '8px',
         md: '16px',
         lg: '30px',
       },
@@ -17,6 +18,7 @@ module.exports = {
         24: '24px',
       },
       letterSpacing: {
+        m8: '-0.8px',
         m56: '-0.56px',
       },
       colors: {

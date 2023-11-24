@@ -43,14 +43,15 @@ export const Modal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div
+            <Dialog.Panel
+              ref={focusRef}
               className={clsx(
                 className,
                 'overflow-visible w-full max-w-[90%] max-h-[70vh] text-left transition-all transform bg-white rounded-md p-5'
               )}
             >
               {children}
-            </div>
+            </Dialog.Panel>
           </Transition.Child>
         </div>
       </Dialog>
