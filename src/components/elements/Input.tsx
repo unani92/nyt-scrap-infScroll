@@ -1,9 +1,8 @@
 import clsx from 'clsx';
-import { debounce } from 'ts-debounce';
 import { CalendarCheck } from 'lucide-react';
 import { justifyBetween } from 'lib/styles';
 import { format } from 'date-fns';
-import { HTMLAttributes, useCallback, useRef, useState } from 'react';
+import { HTMLAttributes, useCallback, useState } from 'react';
 import Calendar from 'react-calendar';
 import { Value } from 'react-calendar/dist/cjs/shared/types';
 
@@ -13,7 +12,7 @@ interface RoundedButtonProps extends HTMLAttributes<HTMLInputElement> {
 }
 
 const InputDefault = ({ className, ...props }: RoundedButtonProps) => {
-  return <input {...props} className={clsx(inputContainerStyle)} />;
+  return <input {...props} className={clsx(inputContainerStyle, className)} />;
 };
 
 export const InputCalendar = ({

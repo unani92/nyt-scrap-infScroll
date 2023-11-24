@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { GLOCATION_ITEMS } from 'lib/constants';
 import { flexCenter, lineClamp1 } from 'lib/styles';
 import { ValueLabel } from 'lib/types';
 import { HTMLAttributes } from 'react';

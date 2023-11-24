@@ -34,9 +34,9 @@ const filterState: FilterState = {
   pubDate: undefined,
   glocation: undefined,
 };
-const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], FilterStore> = (set, get) => ({
+const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], FilterStore> = set => ({
   ...filterState,
-  setFilter: ({ headline, pubDate, glocation }: FilterState) => set(state => ({ headline, pubDate, glocation })),
+  setFilter: ({ headline, pubDate, glocation }: FilterState) => set(() => ({ headline, pubDate, glocation })),
 });
 
 const useStore = create<DefaultStore & FilterStore>()(
