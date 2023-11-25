@@ -9,11 +9,9 @@ interface FilterState {
   headline?: string;
   pubDate?: string; // yyyy-MM-dd
   glocations: Glocation[];
-  page?: number;
 }
 export interface FilterStore extends FilterState {
   setFilter: (value: FilterState) => void;
-  setPage: () => void;
   getGlocationsParsed: () => string;
   getPubDateDot: () => string;
   getFq: () => string;
@@ -22,7 +20,6 @@ const filterState: FilterState = {
   headline: undefined,
   pubDate: undefined,
   glocations: [],
-  page: 0,
 };
 const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], FilterStore> = (set, get) => ({
   ...filterState,
@@ -56,9 +53,7 @@ const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], Filter
           )!.label + ` 외 ${glocations.length - 1}개`
       : '';
   },
-  setFilter: ({ headline, pubDate, glocations }: FilterState) =>
-    set(() => ({ headline, pubDate, glocations, page: 0 })),
-  setPage: () => set(state => ({ page: (state.page || 0) + 1 })),
+  setFilter: ({ headline, pubDate, glocations }: FilterState) => set(() => ({ headline, pubDate, glocations })),
 });
 
 export default createFilterStore;
