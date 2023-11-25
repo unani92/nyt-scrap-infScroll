@@ -73,7 +73,11 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
 
   const onClickBottomButton = useCallback(
     ({ headline, pubDate, glocations }: { headline?: string; pubDate?: Date; glocations: Glocation[] }) => {
-      setFilter({ headline, pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined, glocations });
+      setFilter({
+        headline,
+        pubDate: pubDate ? format(pubDate as Date, 'yyyy-MM-dd') : undefined,
+        glocations,
+      });
       onClose();
     },
     []

@@ -15,12 +15,14 @@ module.exports = {
         lg: '30px',
       },
       lineHeight: {
+        20: '20px',
         24: '24px',
         28: '28px',
       },
       letterSpacing: {
         m9: '-0.9px',
         m8: '-0.8px',
+        m65: '-0.65px',
         m56: '-0.56px',
       },
       colors: {

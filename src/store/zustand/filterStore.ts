@@ -9,19 +9,36 @@ interface FilterState {
   headline?: string;
   pubDate?: string; // yyyy-MM-dd
   glocations: Glocation[];
+  page?: number;
 }
 export interface FilterStore extends FilterState {
   setFilter: (value: FilterState) => void;
+  setPage: () => void;
   getGlocationsParsed: () => string;
   getPubDateDot: () => string;
+  getFq: () => string;
 }
 const filterState: FilterState = {
   headline: undefined,
   pubDate: undefined,
   glocations: [],
+  page: 0,
 };
 const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], FilterStore> = (set, get) => ({
   ...filterState,
+  getFq: () => {
+    const headline = get().headline;
+    const glocations = get().glocations;
+    const pubDate = get().pubDate;
+    const fqArr = [
+      headline ? `headline:("${headline}")` : null,
+      glocations.length > 0
+        ? `glocations:(${glocations.reduce((acc, curr, idx) => acc + `${idx ? ',' : ''}"${curr}"`, '')})`
+        : null,
+      pubDate ? `pub_date:(${pubDate})` : null,
+    ].filter(item => item !== null);
+    return fqArr.join(' AND ');
+  },
   getPubDateDot: () => (get().pubDate ? format(parseISO(get().pubDate!), 'yyyy.M.d') : ''),
   getGlocationsParsed: () => {
     const glocations = get().glocations;
@@ -39,7 +56,9 @@ const createFilterStore: StateCreator<DefaultStore & FilterStore, [], [], Filter
           )!.label + ` 외 ${glocations.length - 1}개`
       : '';
   },
-  setFilter: ({ headline, pubDate, glocations }: FilterState) => set(() => ({ headline, pubDate, glocations })),
+  setFilter: ({ headline, pubDate, glocations }: FilterState) =>
+    set(() => ({ headline, pubDate, glocations, page: 0 })),
+  setPage: () => set(state => ({ page: (state.page || 0) + 1 })),
 });
 
 export default createFilterStore;

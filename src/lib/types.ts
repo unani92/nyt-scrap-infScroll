@@ -4,7 +4,7 @@ export type ArticleResponse = {
 };
 
 export type ArticleRequestParams = {
-  page: number;
+  page?: number;
   sort: 'newest';
   'api-key': string;
   end_date: string;

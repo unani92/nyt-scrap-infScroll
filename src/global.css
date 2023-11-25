@@ -18,3 +18,7 @@ body {
   align-items: center;
   min-width: 375px;
 }
+
+svg.star-yellow {
+  fill: #ffb800;
+}

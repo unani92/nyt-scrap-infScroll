@@ -21,7 +21,7 @@ const InfiniteScrollContainer = <T,>({
         const target = entries[0];
         const hasNextPage = (totalLength ?? 0) > items.length;
         if (target?.isIntersecting && hasNextPage) {
-          console.log(true);
+          console.log(items.length);
           onUpdated();
         }
       });
