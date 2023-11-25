@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getArticles } from 'lib/api/homeService';
 import { Doc, Meta } from 'lib/types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useStore from 'store/zustand';
 import InfiniteScrollContainer from './elements/InfiniteScrollContainer';
 import clsx from 'clsx';

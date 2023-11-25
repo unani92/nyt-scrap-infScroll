@@ -16,7 +16,7 @@ const defaultState: DefaultState = {
   tiger: 10,
 };
 
-const createDefaultStore: StateCreator<DefaultStore, [], [], DefaultStore> = (set, get) => ({
+const createDefaultStore: StateCreator<DefaultStore, [], [], DefaultStore> = set => ({
   ...defaultState,
   addBear: () => set(state => ({ bears: state.bears + 1 })),
   addTiger: () => set(state => ({ tiger: state.tiger + 1 })),
