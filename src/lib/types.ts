@@ -17,8 +17,8 @@ export type Doc = {
   web_url: string;
   source: string;
   headline: Headline;
-  pub_date: Date;
-  by_line: ByLine;
+  pub_date: string;
+  byline: ByLine;
 };
 
 export type ByLine = {

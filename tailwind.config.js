@@ -16,8 +16,10 @@ module.exports = {
       },
       lineHeight: {
         24: '24px',
+        28: '28px',
       },
       letterSpacing: {
+        m9: '-0.9px',
         m8: '-0.8px',
         m56: '-0.56px',
       },
@@ -40,5 +42,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 };
