@@ -75,11 +75,11 @@ function ArticleItem({ docItem }: { docItem: Doc }) {
         </button>
       </div>
       <div className={clsx(justifyBetween, 'text-sm leading-20 tight-m65')}>
-        <div className={clsx(flexCenter, 'gap-x-2')}>
-          <span>{docItem.source}</span>
-          <span>{docItem.byline.original}</span>
+        <div className={clsx(flexCenter, 'gap-x-2 flex-1')}>
+          <span className="line-clamp-1">{docItem.source}</span>
+          <span className="line-clamp-1">{docItem.byline.original}</span>
         </div>
-        <span>{format(parseISO(docItem.pub_date), 'yyyy.M.d. (E)', { locale: ko })}</span>
+        <span className="flex-shrink-0">{format(parseISO(docItem.pub_date), 'yyyy.M.d. (E)', { locale: ko })}</span>
       </div>
     </div>
   );
