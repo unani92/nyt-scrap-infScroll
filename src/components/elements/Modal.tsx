@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { Fragment, useRef } from 'react';
+import { Check } from 'lucide-react';
+import { Fragment, useEffect, useRef } from 'react';
 
 export const Modal = ({
   className,
@@ -55,6 +56,52 @@ export const Modal = ({
           </Transition.Child>
         </div>
       </Dialog>
+    </Transition>
+  );
+};
+
+export const Snackbar = ({
+  isOpen,
+  onClose,
+  message,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  message: string | React.ReactNode;
+}) => {
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isOpen && !timerRef.current) {
+      timerRef.current = setTimeout(() => {
+        if (isOpen) {
+          onClose();
+        }
+      }, 2000);
+    } else {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current!);
+        timerRef.current = null;
+      }
+    }
+  }, [isOpen]);
+
+  return (
+    <Transition
+      show={isOpen}
+      as="div"
+      className="fixed top-5 left-0 right-0 z-50 mx-4 mb-6 rounded bg-gray-800 p-4"
+      enter="ease-out duration-300"
+      enterFrom="opacity-0 scale-95"
+      enterTo="opacity-100 scale-100"
+      leave="ease-in duration-200"
+      leaveFrom="opacity-100 scale-100"
+      leaveTo="opacity-0 scale-95"
+    >
+      <div className="flex flex-row items-center space-x-2">
+        <Check color="green" size={16} />
+        <div className="flex flex-row text-sm font-bold text-white">{message}</div>
+      </div>
     </Transition>
   );
 };
