@@ -7,7 +7,6 @@ export type ArticleRequestParams = {
   page?: number;
   sort: 'newest';
   'api-key': string;
-  end_date: string;
   fl: string;
   fq?: string;
 };
