@@ -90,7 +90,7 @@ export const Snackbar = ({
     <Transition
       show={isOpen}
       as="div"
-      className="fixed top-5 left-0 right-0 z-50 mx-4 mb-6 rounded bg-gray-800 p-4"
+      className="fixed top-5 left-[50%] translate-x-[-50%] z-50 rounded bg-gray-800 p-4 w-[calc(100%-40px)] max-w-[520px]"
       enter="ease-out duration-300"
       enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"
