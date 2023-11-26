@@ -31,8 +31,10 @@ const Articles = () => {
   }, [data, isLoading, error]);
   useEffect(() => {
     ref.current && ref.current.scrollTo({ top: 0, behavior: 'smooth' });
-    setPage(0);
-    setEnabled(true);
+    setTimeout(() => {
+      setPage(0);
+      setEnabled(true);
+    }, 300);
   }, [getFq()]);
   const onUpdated = useCallback((isLoading: boolean, page: number) => {
     if (!isLoading) {

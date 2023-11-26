@@ -14,17 +14,14 @@ const InfiniteScrollContainer = <T,>({
   className?: string;
 }) => {
   const observer = useRef<IntersectionObserver>();
-  const [canActivate, setCanActivate] = useState(true);
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
       if (observer.current) observer.current?.disconnect();
       observer.current = new IntersectionObserver(entries => {
         const target = entries[0];
         const hasNextPage = (totalLength ?? 0) > items.length && items.length % 10 === 0;
-        if (target?.isIntersecting && hasNextPage && canActivate) {
-          setCanActivate(false);
+        if (target?.isIntersecting && hasNextPage) {
           onUpdated();
-          setTimeout(() => setCanActivate(true), 400);
         }
       });
       if (node) observer.current?.observe(node);
