@@ -3,6 +3,7 @@ import http from './axios';
 import { format } from 'date-fns';
 
 export function getArticles({ page, fq }: { page: number; fq?: string }) {
+  console.log('fetch');
   return http.get<ArticleResponse, ArticleRequestParams>('/articlesearch.json', {
     params: {
       page,

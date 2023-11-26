@@ -6,12 +6,14 @@ const InfiniteScrollContainer = <T,>({
   totalLength,
   renderItem,
   className,
+  isLoading,
 }: {
   items: T[];
   onUpdated: () => void;
   totalLength?: number;
   renderItem: (prop: T) => ReactElement<T>;
   className?: string;
+  isLoading: boolean;
 }) => {
   const observer = useRef<IntersectionObserver>();
   const lastElementRef = useCallback(
@@ -20,8 +22,8 @@ const InfiniteScrollContainer = <T,>({
       observer.current = new IntersectionObserver(entries => {
         const target = entries[0];
         const hasNextPage = (totalLength ?? 0) > items.length;
-        if (target?.isIntersecting && hasNextPage) {
-          console.log(items.length);
+        if (target?.isIntersecting && hasNextPage && !isLoading) {
+          observer.current?.unobserve(node);
           onUpdated();
         }
       });
@@ -45,5 +47,18 @@ const InfiniteScrollContainer = <T,>({
     </div>
   );
 };
+
+type IntersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void;
+
+function throttle(callback: IntersectionObserverCallback, delay: number) {
+  let lastCall = 0;
+  return function (entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
+    const now = new Date().getTime();
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      callback(entries, observer);
+    }
+  };
+}
 
 export default InfiniteScrollContainer;

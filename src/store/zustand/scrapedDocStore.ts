@@ -14,6 +14,7 @@ interface ScrapedDocState extends ScrapedDocsFilter {
   scrapedDocs: ScrapedDoc[];
 }
 export interface ScrapedDocStore extends ScrapedDocState {
+  getScrapedFq: () => string;
   setToggleDocs: (article: Doc) => void;
   setScrapedFilter: (value: FilterState) => void;
   getScrapedGlocationsParsed: () => string;
@@ -29,6 +30,19 @@ const scrapedDocState: ScrapedDocState = {
 
 const createScrapedDocStore: StateCreator<ScrapedDocStore & FilterStore, [], [], ScrapedDocStore> = (set, get) => ({
   ...scrapedDocState,
+  getScrapedFq: () => {
+    const headline = get().scrapedHeadline;
+    const glocations = get().scrapedGlocations;
+    const pubDate = get().scrapedPubDate;
+    const fqArr = [
+      headline ? `headline:("${headline}")` : null,
+      glocations.length > 0
+        ? `glocations:(${glocations.reduce((acc, curr, idx) => acc + `${idx ? ',' : ''}"${curr}"`, '')})`
+        : null,
+      pubDate ? `pub_date:(${pubDate})` : null,
+    ].filter(item => item !== null);
+    return fqArr.join(' AND ');
+  },
   // id가 따로 없는 open api 특성 상 web_url을 unique한 값으로 간주
   setToggleDocs: (article: Doc) =>
     set(state => ({

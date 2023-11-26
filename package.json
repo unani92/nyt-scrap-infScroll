@@ -5,6 +5,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^5.8.7",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -28,8 +29,8 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
-    "@tailwindcss/line-clamp": "^0.4.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@tailwindcss/line-clamp": "^0.4.0",
     "@types/node": "^16.11.33",
     "@types/react": "^18.0.1",
     "@types/react-dom": "^18.0.1",

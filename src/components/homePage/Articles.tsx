@@ -32,25 +32,28 @@ const Articles = () => {
       setDocs(page === 0 ? data.docs : docs.concat(data.docs));
       setEnabled(false);
     } else if (error) {
+      setEnabled(false);
       console.log(error);
     }
   }, [data, isLoading, error]);
   useEffect(() => {
-    setPage(0);
     ref.current && ref.current.scrollTo({ top: 0, behavior: 'smooth' });
+    setPage(0);
     setEnabled(true);
   }, [getFq()]);
+  const onUpdated = useCallback((isLoading: boolean, page: number) => {
+    if (!isLoading) {
+      setPage(page + 1);
+      setEnabled(true);
+    }
+  }, []);
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
       <InfiniteScrollContainer
+        isLoading={isLoading}
         items={docs}
         totalLength={meta?.hits}
-        onUpdated={() => {
-          if (!isLoading) {
-            setPage(page + 1);
-            setEnabled(true);
-          }
-        }}
+        onUpdated={() => onUpdated(isLoading, page)}
         renderItem={docItem => <ArticleItem docItem={docItem} />}
       />
     </div>
