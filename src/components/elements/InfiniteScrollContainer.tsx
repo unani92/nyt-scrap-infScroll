@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useRef } from 'react';
+import { ReactElement, useCallback, useRef, useState } from 'react';
 
 const InfiniteScrollContainer = <T,>({
   items,
@@ -6,25 +6,25 @@ const InfiniteScrollContainer = <T,>({
   totalLength,
   renderItem,
   className,
-  isLoading,
 }: {
   items: T[];
   onUpdated: () => void;
   totalLength?: number;
   renderItem: (prop: T) => ReactElement<T>;
   className?: string;
-  isLoading: boolean;
 }) => {
   const observer = useRef<IntersectionObserver>();
+  const [canActivate, setCanActivate] = useState(true);
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {
       if (observer.current) observer.current?.disconnect();
       observer.current = new IntersectionObserver(entries => {
         const target = entries[0];
-        const hasNextPage = (totalLength ?? 0) > items.length;
-        if (target?.isIntersecting && hasNextPage && !isLoading) {
-          observer.current?.unobserve(node);
+        const hasNextPage = (totalLength ?? 0) > items.length && items.length % 10 === 0;
+        if (target?.isIntersecting && hasNextPage && canActivate) {
+          setCanActivate(false);
           onUpdated();
+          setTimeout(() => setCanActivate(true), 400);
         }
       });
       if (node) observer.current?.observe(node);
@@ -47,18 +47,5 @@ const InfiniteScrollContainer = <T,>({
     </div>
   );
 };
-
-type IntersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void;
-
-function throttle(callback: IntersectionObserverCallback, delay: number) {
-  let lastCall = 0;
-  return function (entries: IntersectionObserverEntry[], observer: IntersectionObserver) {
-    const now = new Date().getTime();
-    if (now - lastCall >= delay) {
-      lastCall = now;
-      callback(entries, observer);
-    }
-  };
-}
 
 export default InfiniteScrollContainer;
