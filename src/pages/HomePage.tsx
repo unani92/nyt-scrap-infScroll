@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import HomeHeader from 'components/HomeHeader';
-import Articles from 'components/Articles';
+import HomeHeader from 'components/homePage/HomeHeader';
+import Articles from 'components/homePage/Articles';
 
 const HomePage = () => {
   return (

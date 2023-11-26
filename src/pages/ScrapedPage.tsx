@@ -1,16 +1,12 @@
 import useStore from 'store/zustand';
+import EmptyScraped from 'components/scrapedPage/EmptyScraped';
 
 const ScrapedPage = () => {
   const { scrapedDocs } = useStore();
-  return (
+  return scrapedDocs.length === 0 ? (
+    <EmptyScraped />
+  ) : (
     <div>
-      {scrapedDocs.length === 0 ? (
-        <div>
-          <div></div>
-        </div>
-      ) : (
-        <div></div>
-      )}
       <div></div>
     </div>
   );

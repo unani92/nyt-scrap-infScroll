@@ -3,14 +3,14 @@ import { getArticles } from 'lib/api/homeService';
 import { Doc, Meta } from 'lib/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useStore from 'store/zustand';
-import InfiniteScrollContainer from './elements/InfiniteScrollContainer';
+import InfiniteScrollContainer from '../elements/InfiniteScrollContainer';
 import clsx from 'clsx';
 import { Star } from 'lucide-react';
 import { black80, flexCenter, justifyBetween } from 'lib/styles';
 import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
-import { Snackbar } from './elements/Modal';
+import { Snackbar } from '../elements/Modal';
 
 const Articles = () => {
   const { getFq } = useStore();

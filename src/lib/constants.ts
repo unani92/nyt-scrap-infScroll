@@ -12,3 +12,6 @@ export const GLOCATION_ITEMS: ValueLabel<Glocation>[] = [
   { value: Glocation.FRANCE, label: '프랑스' },
   { value: Glocation.UK, label: '영국' },
 ];
+
+export const EMPTY_SCRAPDE_ITEM = '저장된 스크랩이 없습니다.';
+export const GO_TO_MAIN = '스크랩 하러 가기';
