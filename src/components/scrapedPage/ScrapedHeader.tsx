@@ -4,10 +4,17 @@ import Badge from 'components/elements/Badge';
 import { black80, blue500, flexCenter } from 'lib/styles';
 import clsx from 'clsx';
 import { CalendarCheck, Search } from 'lucide-react';
+import FiltersModal from 'components/FilterModal';
 
 const ScrapedHeader = () => {
-  const { scrapedHeadline, scrapedPubDate, scrapedGlocations, getScrapedGlocationsParsed, getScrapedPubDateDot } =
-    useStore();
+  const {
+    scrapedHeadline,
+    scrapedPubDate,
+    scrapedGlocations,
+    getScrapedGlocationsParsed,
+    getScrapedPubDateDot,
+    setScrapedFilter,
+  } = useStore();
   const [open, setOpen] = useState(false);
   const onClick = useCallback((open: boolean) => setOpen(open), []);
   return (
@@ -31,6 +38,14 @@ const ScrapedHeader = () => {
           selected={scrapedGlocations.length > 0}
         />
       </div>
+      <FiltersModal
+        open={open}
+        onClose={() => onClick(false)}
+        headlineDefault={scrapedHeadline}
+        pubDateDefault={scrapedPubDate}
+        glocationDefault={scrapedGlocations}
+        setFilter={setScrapedFilter}
+      />
     </>
   );
 };
