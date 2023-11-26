@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { black80, justifyAround, justifyCenter } from 'lib/styles';
 import { BookText, Home, LucideIcon } from 'lucide-react';
 import HomePage from 'pages/HomePage';
+import ScrapedPage from 'pages/ScrapedPage';
 import { ReactElement, useMemo } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import ReactQueryProvider from 'store/reactQueryStore';
@@ -12,6 +13,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/scraped" element={<ScrapedPage />} />
         </Routes>
       </Layout>
     </ReactQueryProvider>
@@ -46,7 +48,7 @@ function BottomNav() {
       },
       {
         label: '스크랩',
-        route: '/scrap',
+        route: '/scraped',
         icon: (isPresentRoute: boolean) => <BookText color={isPresentRoute ? 'white' : black80} size={24} />,
       },
     ],
