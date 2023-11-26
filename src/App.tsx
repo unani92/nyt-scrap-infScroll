@@ -60,7 +60,9 @@ function BottomNav() {
       {navs.map(nav => (
         <div className={clsx(justifyCenter, 'flex-col')} key={nav.route} onClick={() => navigate(nav.route)}>
           <div className={clsx('mb-2')}>{nav.icon(presentRoute === nav.route)}</div>
-          <span className={clsx('text-black-80 text-xs', presentRoute === nav.route && 'text-white')}>{nav.label}</span>
+          <span className={clsx('text-black-80 text-xs font-semibold', presentRoute === nav.route && 'text-white')}>
+            {nav.label}
+          </span>
         </div>
       ))}
     </div>

@@ -5,7 +5,7 @@ import { GLOCATION_ITEMS } from 'lib/constants';
 import { format, parseISO } from 'date-fns';
 
 // filterStore
-interface FilterState {
+export interface FilterState {
   headline?: string;
   pubDate?: string; // yyyy-MM-dd
   glocations: Glocation[];

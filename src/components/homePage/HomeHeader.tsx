@@ -105,7 +105,7 @@ function FiltersModal({ open, onClose }: { open: boolean; onClose: () => void })
   );
 }
 
-export function FilterContainer({ label, children }: { label: string; children: ReactNode }) {
+function FilterContainer({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="pb-10">
       <div className="text-large font-bold leading-24 tracking-m8 mb-2">{label}</div>

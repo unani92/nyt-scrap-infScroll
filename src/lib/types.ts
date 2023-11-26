@@ -11,14 +11,18 @@ export type ArticleRequestParams = {
   fq?: string;
 };
 
-export type Doc = {
+export interface Doc {
   abstract: string;
   web_url: string;
   source: string;
   headline: Headline;
   pub_date: string;
   byline: ByLine;
-};
+}
+
+export interface ScrapedDoc extends Doc {
+  glocations: Glocation[];
+}
 
 export type ByLine = {
   original: string;

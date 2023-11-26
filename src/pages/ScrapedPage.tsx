@@ -1,5 +1,6 @@
 import useStore from 'store/zustand';
 import EmptyScraped from 'components/scrapedPage/EmptyScraped';
+import ScrapedHeader from 'components/scrapedPage/ScrapedHeader';
 
 const ScrapedPage = () => {
   const { scrapedDocs } = useStore();
@@ -7,7 +8,7 @@ const ScrapedPage = () => {
     <EmptyScraped />
   ) : (
     <div>
-      <div></div>
+      <ScrapedHeader />
     </div>
   );
 };
