@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import Badge from './elements/Badge';
-import { flexCenter } from 'lib/styles';
+import { black80, blue500, flexCenter } from 'lib/styles';
 import { Search, CalendarCheck } from 'lucide-react';
 import React, { ReactNode, useCallback, useState } from 'react';
 import { Modal } from './elements/Modal';
@@ -25,13 +25,13 @@ const HomeHeader = () => {
           onClick={() => onClick(true)}
           label={headline || '전체 헤드라인'}
           selected={Boolean(headline)}
-          icon={<Search size={16} color={headline ? '#3478F6' : '#6D6D6D'} />}
+          icon={<Search size={16} color={headline ? blue500 : black80} />}
         />
         <Badge
           onClick={() => onClick(true)}
           label={getPubDateDot() || '전체 날짜'}
           selected={Boolean(pubDate)}
-          icon={<CalendarCheck size={16} color={pubDate ? '#3478F6' : '#6D6D6D'} />}
+          icon={<CalendarCheck size={16} color={pubDate ? blue500 : black80} />}
         />
         <Badge
           onClick={() => onClick(true)}

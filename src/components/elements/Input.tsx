@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { CalendarCheck } from 'lucide-react';
-import { justifyBetween } from 'lib/styles';
+import { black80, justifyBetween } from 'lib/styles';
 import { format } from 'date-fns';
 import { HTMLAttributes, useCallback, useState } from 'react';
 import Calendar from 'react-calendar';
@@ -40,7 +40,7 @@ export const InputCalendar = ({
         <span className={clsx(!date && 'text-gray-350')}>
           {date ? format(date as Date, 'yyyy.MM.dd') : placeholder}
         </span>
-        <CalendarCheck size={16} color="#6D6D6D" />
+        <CalendarCheck size={16} color={black80} />
       </div>
       {showCalendar && (
         <Calendar className="absolute z-50 left-0" formatDay={(_, date) => format(date, 'd')} onChange={_onChange} />

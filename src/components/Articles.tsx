@@ -6,7 +6,7 @@ import useStore from 'store/zustand';
 import InfiniteScrollContainer from './elements/InfiniteScrollContainer';
 import clsx from 'clsx';
 import { Star } from 'lucide-react';
-import { flexCenter, justifyBetween } from 'lib/styles';
+import { black80, flexCenter, justifyBetween } from 'lib/styles';
 import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
@@ -78,7 +78,7 @@ function ArticleItem({ docItem }: { docItem: Doc }) {
             </div>
           </Link>
           <button className="flex-shink-0 w-4 h-4 pt-2" onClick={onClickStar}>
-            <Star className={clsx(scraped && 'star-yellow')} size={16} color={scraped ? '#FFB800' : '#6D6D6D'} />
+            <Star className={clsx(scraped && 'star-yellow')} size={16} color={scraped ? '#FFB800' : black80} />
           </button>
         </div>
         <div className={clsx(justifyBetween, 'text-sm leading-20 tight-m65')}>
