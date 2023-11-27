@@ -33,7 +33,7 @@ const InfiniteScrollContainer = <T,>({
     <div className={className}>
       {items.length > 0 &&
         items.map((item, idx) =>
-          items.length === idx + 1 ? (
+          items.length % 10 === 0 && items.length === idx + 1 ? (
             <div ref={lastElementRef} key={idx}>
               {renderItem(item)}
             </div>

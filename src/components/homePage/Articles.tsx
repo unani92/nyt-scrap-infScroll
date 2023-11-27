@@ -5,9 +5,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useStore from 'store/zustand';
 import InfiniteScrollContainer from '../elements/InfiniteScrollContainer';
 import ArticleItem from 'components/ArticleItem';
+import { Snackbar } from 'components/elements/Modal';
 
 const Articles = () => {
-  const { getFq } = useStore();
+  const { getFq, scrapedDocs } = useStore();
   const ref = useRef<HTMLDivElement>(null);
   const [meta, setMeta] = useState<Meta>();
   const [docs, setDocs] = useState<Doc[]>([]);
@@ -42,13 +43,20 @@ const Articles = () => {
       setEnabled(true);
     }
   }, []);
+  const [snackbarMsg, setSnackbarMsg] = useState('');
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
+      <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
       <InfiniteScrollContainer
         items={docs}
         totalLength={meta?.hits}
         onUpdated={() => onUpdated(isLoading, page)}
-        renderItem={docItem => <ArticleItem docItem={docItem} />}
+        renderItem={docItem => (
+          <ArticleItem
+            docItem={docItem}
+            onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
+          />
+        )}
       />
     </div>
   );

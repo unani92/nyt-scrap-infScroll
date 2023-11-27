@@ -1,10 +1,14 @@
 import { isSameDay, parseISO } from 'date-fns';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useStore from 'store/zustand';
+import InfiniteScrollContainer from 'components/elements/InfiniteScrollContainer';
+import ArticleItem from 'components/ArticleItem';
+import { Snackbar } from 'components/elements/Modal';
 
 const Articles = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrapedDocs, scrapedHeadline, scrapedPubDate, scrapedGlocations } = useStore();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const filtered = useMemo(() => {
     return (
       scrapedDocs
@@ -19,9 +23,27 @@ const Articles = () => {
         )
     );
   }, [scrapedDocs, scrapedHeadline, scrapedPubDate, scrapedGlocations]);
+  useEffect(() => {
+    ref.current && ref.current.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      setPage(1);
+    }, 300);
+  }, [filtered]);
+  const [snackbarMsg, setSnackbarMsg] = useState('');
   return (
-    <div>
-      <div></div>
+    <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
+      <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
+      <InfiniteScrollContainer
+        items={filtered.slice(0, page * 10)}
+        totalLength={filtered.length}
+        onUpdated={() => setPage(page + 1)}
+        renderItem={scrapedDoc => (
+          <ArticleItem
+            docItem={scrapedDoc}
+            onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
+          />
+        )}
+      />
     </div>
   );
 };
