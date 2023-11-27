@@ -21,7 +21,7 @@ export default function ArticleItem({
     (e: React.MouseEvent) => {
       e.stopPropagation();
       onClickStar(scraped);
-      setToggleDocs(docItem);
+      setTimeout(() => setToggleDocs(docItem), 500);
     },
     [docItem]
   );

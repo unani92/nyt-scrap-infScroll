@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useRef, useState } from 'react';
+import { ReactElement, useCallback, useRef } from 'react';
 
 const InfiniteScrollContainer = <T,>({
   items,

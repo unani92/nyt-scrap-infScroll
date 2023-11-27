@@ -4,6 +4,7 @@ import useStore from 'store/zustand';
 import InfiniteScrollContainer from 'components/elements/InfiniteScrollContainer';
 import ArticleItem from 'components/ArticleItem';
 import { Snackbar } from 'components/elements/Modal';
+import EmptyScraped from './EmptyScraped';
 
 const Articles = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,17 +34,21 @@ const Articles = () => {
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
       <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
-      <InfiniteScrollContainer
-        items={filtered.slice(0, page * 10)}
-        totalLength={filtered.length}
-        onUpdated={() => setPage(page + 1)}
-        renderItem={scrapedDoc => (
-          <ArticleItem
-            docItem={scrapedDoc}
-            onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
-          />
-        )}
-      />
+      {filtered.length > 0 ? (
+        <InfiniteScrollContainer
+          items={filtered.slice(0, page * 10)}
+          totalLength={filtered.length}
+          onUpdated={() => setPage(page + 1)}
+          renderItem={scrapedDoc => (
+            <ArticleItem
+              docItem={scrapedDoc}
+              onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
+            />
+          )}
+        />
+      ) : (
+        <EmptyScraped />
+      )}
     </div>
   );
 };

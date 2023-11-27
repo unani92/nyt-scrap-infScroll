@@ -77,7 +77,7 @@ export const Snackbar = ({
         if (isOpen) {
           onClose();
         }
-      }, 2000);
+      }, 1500);
     } else {
       if (timerRef.current) {
         clearTimeout(timerRef.current!);
