@@ -83,3 +83,8 @@ $ yarn start
 - react-query 활용을 통해 300초 이내 동일 호출은 캐시값을 활용해 구현
   - 동일호출: fq(`type string`), page(`type number`) 가 같을 경우 동일호출로 간주
 - 429 ERROR(Too many request) 발생 시 불필요한 무한스크롤 방지 및 안내 스낵바 추가
+
+### 버그 수정사항(221127 21시 수정)
+
+- ios에서 사파리 브라우저 사용 시 기사 content container가 nav를 가리는 버그 수정했습니다.
+- 인풋 포커스 시 화면이 줌업 되는 이슈 수정했습니다.
