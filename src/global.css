@@ -22,3 +22,7 @@ body {
 svg.star-yellow {
   fill: #ffb800;
 }
+
+input:focus-visible {
+  outline: none !important;
+}

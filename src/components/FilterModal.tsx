@@ -35,7 +35,7 @@ function FiltersModal({
   );
 
   const [pubDate, setDate] = useState<Value | undefined>(pubDateDefault ? parseISO(pubDateDefault) : undefined);
-  const onChangeDate = useCallback((date: Value) => date && setDate(date), []);
+  const onChangeDate = useCallback((date?: Value) => setDate(date), []);
 
   const [glocations, setGlocations] = useState<Glocation[]>(glocationDefault);
   const onChangeGlocation = useCallback(
@@ -67,6 +67,7 @@ function FiltersModal({
           defaultValue={headline}
           onChange={onChangeHeadline}
           placeholder="검색하실 헤드라인을 입력해주세요."
+          removeValue={() => setHeadline('')}
         />
       </FilterContainer>
       <FilterContainer label="날짜">
