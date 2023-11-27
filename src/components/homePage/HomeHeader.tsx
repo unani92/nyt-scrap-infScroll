@@ -2,7 +2,6 @@ import { clsx } from 'clsx';
 import Badge from '../elements/Badge';
 import { black80, blue500, flexCenter } from 'lib/styles';
 import { Search, CalendarCheck } from 'lucide-react';
-import { useCallback, useState } from 'react';
 import useStore from 'store/zustand';
 import FiltersModal from 'components/FilterModal';
 
