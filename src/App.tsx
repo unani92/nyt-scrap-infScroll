@@ -61,7 +61,11 @@ function BottomNav() {
     <div className={clsx(justifyCenter, 'fixed bottom-0 left-0 w-full')}>
       <nav className={clsx(justifyAround, 'bg-black-100 p-5 rounded-t-lg w-full max-w-[560px] min-w-[375px]')}>
         {navs.map(nav => (
-          <div className={clsx(justifyCenter, 'flex-col')} key={nav.route} onClick={() => navigate(nav.route)}>
+          <div
+            className={clsx(justifyCenter, 'flex-col cursor-pointer')}
+            key={nav.route}
+            onClick={() => navigate(nav.route)}
+          >
             <div className={clsx('mb-2')}>{nav.icon(presentRoute === nav.route)}</div>
             <span className={clsx('text-black-80 text-xs font-semibold', presentRoute === nav.route && 'text-white')}>
               {nav.label}

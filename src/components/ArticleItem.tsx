@@ -23,7 +23,7 @@ export default function ArticleItem({
       onClickStar(scraped);
       setTimeout(() => setToggleDocs(docItem), 500);
     },
-    [docItem]
+    [scraped]
   );
   return (
     <div className="w-full px-5 py-2.5 bg-white mb-2 rounded-md">
