@@ -23,7 +23,9 @@ function App() {
 function Layout({ children }: { children: JSX.Element }) {
   return (
     <main
-      className={clsx('max-w-[560px] min-w-[375px] w-full p-0 m-0 h-[100vh] bg-gray-200 overflow-y-hidden relative')}
+      className={clsx(
+        'z-1 max-w-[560px] min-w-[375px] w-full p-0 m-0 h-[100vh] bg-gray-200 overflow-y-hidden relative'
+      )}
     >
       {children}
       <BottomNav />
@@ -56,7 +58,7 @@ function BottomNav() {
   );
   const presentRoute = useLocation().pathname;
   return (
-    <div className={clsx(justifyAround, 'bg-black-100 p-5 absolute bottom-0 left-0 w-full rounded-t-lg')}>
+    <div className={clsx(justifyAround, 'bg-black-100 p-5 fixed bottom-0 left-0 w-full rounded-t-lg')}>
       {navs.map(nav => (
         <div className={clsx(justifyCenter, 'flex-col')} key={nav.route} onClick={() => navigate(nav.route)}>
           <div className={clsx('mb-2')}>{nav.icon(presentRoute === nav.route)}</div>
