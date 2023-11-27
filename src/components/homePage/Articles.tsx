@@ -6,9 +6,10 @@ import useStore from 'store/zustand';
 import InfiniteScrollContainer from '../elements/InfiniteScrollContainer';
 import ArticleItem from 'components/ArticleItem';
 import { Snackbar } from 'components/elements/Modal';
+import EmptySearchResult from './EmptySearchResult';
 
-const Articles = () => {
-  const { getFq, scrapedDocs } = useStore();
+const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () => void }) => {
+  const { getFq } = useStore();
   const ref = useRef<HTMLDivElement>(null);
   const [meta, setMeta] = useState<Meta>();
   const [docs, setDocs] = useState<Doc[]>([]);
@@ -22,8 +23,9 @@ const Articles = () => {
   });
   useEffect(() => {
     if (data) {
+      const res = page === 0 ? data.docs : docs.concat(data.docs);
       page === 0 && setMeta(data.meta);
-      setDocs(page === 0 ? data.docs : docs.concat(data.docs));
+      setDocs(res);
       setEnabled(false);
     } else if (error) {
       setEnabled(false);
@@ -47,17 +49,21 @@ const Articles = () => {
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
       <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
-      <InfiniteScrollContainer
-        items={docs}
-        totalLength={meta?.hits}
-        onUpdated={() => onUpdated(isLoading, page)}
-        renderItem={docItem => (
-          <ArticleItem
-            docItem={docItem}
-            onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
-          />
-        )}
-      />
+      {docs.length > 0 ? (
+        <InfiniteScrollContainer
+          items={docs}
+          totalLength={meta?.hits}
+          onUpdated={() => onUpdated(isLoading, page)}
+          renderItem={docItem => (
+            <ArticleItem
+              docItem={docItem}
+              onClickStar={isScraped => setSnackbarMsg(`기사가 스크랩 ${isScraped ? '해제' : ''}되었습니다`)}
+            />
+          )}
+        />
+      ) : (
+        <EmptySearchResult emptySearchResultHandler={emptySearchResultHandler} />
+      )}
     </div>
   );
 };

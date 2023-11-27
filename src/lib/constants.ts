@@ -14,4 +14,6 @@ export const GLOCATION_ITEMS: ValueLabel<Glocation>[] = [
 ];
 
 export const EMPTY_SCRAPDE_ITEM = '저장된 스크랩이 없습니다.';
+export const EMPTY_SEARCH_RESULT = '검색 결과가 없습니다.';
 export const GO_TO_MAIN = '스크랩 하러 가기';
+export const CHANGE_SEARCH_FILTER = '검색 필터 변경하기';
