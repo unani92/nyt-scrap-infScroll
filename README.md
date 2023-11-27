@@ -8,6 +8,7 @@
 
 ### 실행 방법
 
+[배포링크](https://nyt-scrap-inf-scroll.vercel.app/)
 해당 프로젝트는 `node version 18.17.0` 에서 제작되었습니다.
 따라서 이하 버전 사용 시 nvm을 통해 **버전에 맞는 node를 먼저 설치 후 진행**해야 합니다.
 
