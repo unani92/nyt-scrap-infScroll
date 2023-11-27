@@ -17,7 +17,10 @@ const Badge = ({
   return (
     <div
       onClick={() => onClick && onClick()}
-      className={clsx('max-w-[130px] border rounded-lg px-3 py-1', selected ? 'border-blue-500' : 'border-gray-350')}
+      className={clsx(
+        'max-w-[130px] border rounded-lg px-3 py-1 cursor-pointer',
+        selected ? 'border-blue-500' : 'border-gray-350'
+      )}
     >
       <div className={clsx(justifyCenter, 'gap-x-1')}>
         {icon}
