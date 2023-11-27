@@ -30,8 +30,16 @@ const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () 
       setDocs(res);
       setEnabled(false);
     } else if (error) {
-      setEnabled(false);
+      // API 사용량 초과로 에러 발생 시 토스트 노출
+      // 스크롤 제일 위로 올려서 지속적인 에러호출 차단
+      // 에러 발생한 만큼 페이지 수 롤백
       console.log(error);
+      setSnackbarMsg('에러가 발생했어요. 잠시 후 시도 바랍니다.');
+      ref.current && ref.current.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        setEnabled(false);
+        setPage(page - 1);
+      }, 300);
     }
   }, [data, isLoading, error]);
   useEffect(() => {
