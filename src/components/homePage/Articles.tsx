@@ -7,6 +7,8 @@ import InfiniteScrollContainer from '../elements/InfiniteScrollContainer';
 import ArticleItem from 'components/ArticleItem';
 import { Snackbar } from 'components/elements/Modal';
 import EmptySearchResult from './EmptySearchResult';
+import { blue500 } from 'lib/styles';
+import LoadingSpinner from 'components/elements/LoadingSpinner';
 
 const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () => void }) => {
   const { getFq } = useStore();
@@ -49,6 +51,7 @@ const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () 
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
       <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
+      <LoadingSpinner loading={isLoading} />
       {docs.length === 0 && !isLoading ? (
         <EmptySearchResult emptySearchResultHandler={emptySearchResultHandler} />
       ) : (
