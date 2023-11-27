@@ -27,15 +27,22 @@ $ yarn start
   - 실제 프로덕트로서 기획을 통해 개발되는 상황이라면 scrap된 리스트를 호출하는 API를 서버단과 논의할 것이라 판단했습니다.
   - 따라서 API가 있다는 가정 하에 별표 토글링을 통해 zustand state에 저장된 값들을 활용해 구현했습니다.
   - 실제 호출시 리턴되는 기사 object 내에 glocation을 특정할 필드가 없기 때문에 homescreen에서 적용한 필터의 glocation을 기준으로 필터링을 구현했습니다.
+- 시차로 인하여 발생하는 서버사이드 단의 이슈: 기사 검색 23-11-09(`pub_date:(2023-11-09)`)의 결과값이 실제 pub_date 23-11-10인 기사가 리턴될 수 있음
+
+  - zustand state로 구현된 scrapedPage 특성 상 23-11-09로 검색 시 API 호출에는 보였지만 scrapedPage에서는 보이지 않는 이슈가 발생
+  - `scrapedDoc[]` 을 store에 저장할 때 pub_date 필터링이 있는 경우 해당 값으로 덮어쓴 이후 저장
+    <img src="https://github.com/unani92/nyt-scrap-infScroll/assets/53211781/748959b4-180c-4922-88f6-94529ea4fc53" alt="KakaoTalk_Photo_2023-11-27-21-04-05 002" style="zoom: 33%;" /><img src="https://github.com/unani92/nyt-scrap-infScroll/assets/53211781/9ae14e4c-33c8-4400-903d-46cf001082d2" alt="KakaoTalk_Photo_2023-11-27-21-04-04 001" style="zoom: 33%;" />
+
+
 - 이전에 요청한 필터, 페이지의 경우에는 react-query를 통해 캐싱된 결과가 노출됩니다.
 
-  ```typescript
-  new QueryClient({
-    defaultOptions: {
-      queries: { retry: false, refetchOnWindowFocus: false, staleTime: 300000 },
-    },
-  });
-  ```
+```typescript
+new QueryClient({
+  defaultOptions: {
+    queries: { retry: false, refetchOnWindowFocus: false, staleTime: 300000 },
+  },
+});
+```
 
 ### 사용 기술 스택
 

@@ -44,6 +44,8 @@ const createScrapedDocStore: StateCreator<ScrapedDocStore & FilterStore, [], [],
     return fqArr.join(' AND ');
   },
   // id가 따로 없는 open api 특성 상 web_url을 unique한 값으로 간주
+  // 시간 차이로 인하여 발생하는 이슈: 기사 검색 23-11-09의 결과값이 실제 pub_date 23-11-10인 기사가 리턴될 수 있음
+  // zustand state로 구현된 scrapedPage 특성 상 검색 시 입력한 pub_date로 바꿔주어야 안헷갈릴듯
   setToggleDocs: (article: Doc) => {
     set(state => {
       const res = state.scrapedDocs.some(doc => doc.web_url === article.web_url)
@@ -53,7 +55,10 @@ const createScrapedDocStore: StateCreator<ScrapedDocStore & FilterStore, [], [],
       return {
         scrapedDocs: state.scrapedDocs.some(doc => doc.web_url === article.web_url)
           ? state.scrapedDocs.filter(doc => doc.web_url !== article.web_url)
-          : [...state.scrapedDocs, { ...article, glocations: get().glocations }],
+          : [
+              ...state.scrapedDocs,
+              { ...article, glocations: get().glocations, pub_date: get().pubDate || article.pub_date },
+            ],
       };
     });
   },
