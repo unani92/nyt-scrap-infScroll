@@ -13,7 +13,9 @@ const Articles = () => {
   const filtered = useMemo(() => {
     return (
       scrapedDocs
-        .filter(scrapedDoc => (scrapedHeadline ? scrapedDoc.headline.main.includes(scrapedHeadline) : true))
+        .filter(scrapedDoc =>
+          scrapedHeadline ? scrapedDoc.headline.main.toLowerCase().includes(scrapedHeadline.toLowerCase()) : true
+        )
         .filter(scrapedDoc =>
           scrapedPubDate ? isSameDay(parseISO(scrapedDoc.pub_date), parseISO(scrapedPubDate)) : true
         )

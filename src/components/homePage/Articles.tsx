@@ -49,7 +49,9 @@ const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () 
   return (
     <div ref={ref} className="overflow-auto h-[calc(100vh-90px)] p-5">
       <Snackbar isOpen={Boolean(snackbarMsg)} onClose={() => setSnackbarMsg('')} message={snackbarMsg} />
-      {docs.length > 0 ? (
+      {docs.length === 0 && !isLoading ? (
+        <EmptySearchResult emptySearchResultHandler={emptySearchResultHandler} />
+      ) : (
         <InfiniteScrollContainer
           items={docs}
           totalLength={meta?.hits}
@@ -61,8 +63,6 @@ const Articles = ({ emptySearchResultHandler }: { emptySearchResultHandler?: () 
             />
           )}
         />
-      ) : (
-        <EmptySearchResult emptySearchResultHandler={emptySearchResultHandler} />
       )}
     </div>
   );

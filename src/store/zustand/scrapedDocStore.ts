@@ -22,7 +22,7 @@ export interface ScrapedDocStore extends ScrapedDocState {
 }
 
 const scrapedDocState: ScrapedDocState = {
-  scrapedDocs: [],
+  scrapedDocs: localStorage.getItem('scrapedDocs') ? JSON.parse(localStorage.getItem('scrapedDocs') as string) : [],
   scrapedHeadline: undefined,
   scrapedPubDate: undefined,
   scrapedGlocations: [],
@@ -44,12 +44,19 @@ const createScrapedDocStore: StateCreator<ScrapedDocStore & FilterStore, [], [],
     return fqArr.join(' AND ');
   },
   // id가 따로 없는 open api 특성 상 web_url을 unique한 값으로 간주
-  setToggleDocs: (article: Doc) =>
-    set(state => ({
-      scrapedDocs: state.scrapedDocs.some(doc => doc.web_url === article.web_url)
+  setToggleDocs: (article: Doc) => {
+    set(state => {
+      const res = state.scrapedDocs.some(doc => doc.web_url === article.web_url)
         ? state.scrapedDocs.filter(doc => doc.web_url !== article.web_url)
-        : [...state.scrapedDocs, { ...article, glocations: get().glocations }],
-    })),
+        : [...state.scrapedDocs, { ...article, glocations: get().glocations }];
+      localStorage.setItem('scrapedDocs', JSON.stringify(res));
+      return {
+        scrapedDocs: state.scrapedDocs.some(doc => doc.web_url === article.web_url)
+          ? state.scrapedDocs.filter(doc => doc.web_url !== article.web_url)
+          : [...state.scrapedDocs, { ...article, glocations: get().glocations }],
+      };
+    });
+  },
 
   // scraped page filter
   setScrapedFilter: ({ headline, pubDate, glocations }: FilterState) =>
